@@ -38,7 +38,7 @@
     var l = el.id && document.querySelector("label[for='" + el.id + "']");
     return l ? l.textContent.replace(/\s*\(optional\)\s*/i, "").replace(/\*/g, "").trim() : el.name;
   }
-  document.querySelectorAll("form").forEach(function (form) {
+  /*document.querySelectorAll("form").forEach(function (form) {
     var fields = form.querySelectorAll("input[name], select[name], textarea[name]");
     fields.forEach(function (el) {
       var l = el.id && document.querySelector("label[for='" + el.id + "']");
@@ -58,5 +58,5 @@
       fields.forEach(function (el) { if (el.value) body.push(labelFor(el) + ": " + el.value); });
       window.location.href = "mailto:support@trewda.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body.join("\n\n"));
     });
-  });
+  });*/
 })();

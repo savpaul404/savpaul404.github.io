@@ -344,7 +344,8 @@
          Tell us a little about your business and how you sell. Our team will reach out to discuss whether Trewda is a good fit.
         </p>
        </div>
-       <form class="grid gap-5 rounded-2xl border bg-card p-7 md:grid-cols-2 md:p-9">
+       <form id="business-contact-form"action="https://submit-form.com/i2zKsyqDT" method="POST" class="grid gap-5 rounded-2xl border bg-card p-7 md:grid-cols-2 md:p-9">
+        <input type="hidden" name="_redirect" value="https://trewda.com/business-solutions.html" />
         <div>
          <label class="mb-1.5 block text-sm font-semibold" for="f-businessName">
           Business name
@@ -374,28 +375,28 @@
           Industry
          </label>
          <select aria-invalid="false" class="w-full rounded-xl border border-input bg-card px-4 py-3 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-ring" id="f-industry" name="industry">
-          <option value="">
+          <option value="unselected">
            Select an industry
           </option>
-          <option>
+          <option value="home-improvement">
            Home improvement
           </option>
-          <option>
+          <option value="healthcare-wellness">
            Healthcare &amp; wellness
           </option>
-          <option>
+          <option value="automotive">
            Automotive
           </option>
-          <option>
+          <option value="retail">
            Retail
           </option>
-          <option>
+          <option value="education">
            Education
           </option>
-          <option>
+          <option value="professional-services">
            Professional services
           </option>
-          <option>
+          <option value="other">
            Other
           </option>
          </select>
@@ -417,7 +418,7 @@
         <div class="md:col-span-2">
          <div>
           <div class="flex items-start gap-3">
-           <button aria-checked="false" aria-describedby="f-consent-d" aria-invalid="false" class="grid place-content-center peer border border-primary shadow cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground mt-0.5 h-6 w-6 shrink-0 rounded-[4px] sm:h-5 sm:w-5" data-state="unchecked" id="f-consent" role="checkbox" type="button" value="on">
+           <button aria-checked="false" aria-describedby="f-consent-d" aria-invalid="false" class="grid place-content-center peer border border-primary shadow cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground mt-0.5 h-6 w-6 shrink-0 rounded-[4px] sm:h-5 sm:w-5" data-state="unchecked" id="f-consent" role="checkbox" type="button" value="on" required>
            </button>
            <input aria-hidden="true" style="position:absolute;pointer-events:none;opacity:0;margin:0;transform:translateX(-100%)" tabindex="-1" type="checkbox" value="on"/>
            <label class="text-xs leading-relaxed text-muted-foreground" for="f-consent" id="f-consent-d">
@@ -587,6 +588,27 @@
    </footer>
   </div>
   <script src="assets/site.js">
+  </script>
+  <script>
+    (function () {
+      var form = document.getElementById('business-contact-form');
+      var checkbox = document.getElementById('f-consent');
+
+      if (!form || !checkbox) return;
+
+      form.addEventListener('submit', function (event) {
+        var isChecked = checkbox.getAttribute('aria-checked') === 'true';
+
+        if (!isChecked) {
+          event.preventDefault();
+          checkbox.setAttribute('aria-invalid', 'true');
+          checkbox.focus();
+          alert('Please check the consent box before continuing.');
+        } else {
+          checkbox.setAttribute('aria-invalid', 'false');
+        }
+      });
+    })();
   </script>
  </body>
 </html>

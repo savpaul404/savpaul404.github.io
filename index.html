@@ -139,7 +139,7 @@
           Technology Platform
          </span>
         </div>
-        <button aria-pressed="false" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-28 px-3 py-3.5 sm:w-40 sm:px-4 sm:py-4 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:22%;top:14%" type="button">
+        <button aria-pressed="false" data-participant="consumers" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-28 px-3 py-3.5 sm:w-40 sm:px-4 sm:py-4 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:22%;top:14%" type="button">
          <img alt="" class="rounded-full object-cover shadow-soft ring-1 ring-border transition-transform duration-200 group-hover:scale-105 h-12 w-12 sm:h-16 sm:w-16" height="256" loading="lazy" src="assets/eco-consumers.png" width="256"/>
          <span class="mt-2 font-display font-semibold text-brand-charcoal text-xs sm:text-sm">
           Consumers
@@ -148,7 +148,7 @@
           Explore Financing
          </span>
         </button>
-        <button aria-pressed="false" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-28 px-3 py-3.5 sm:w-40 sm:px-4 sm:py-4 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:78%;top:14%" type="button">
+        <button aria-pressed="false" data-participant="merchants" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-28 px-3 py-3.5 sm:w-40 sm:px-4 sm:py-4 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:78%;top:14%" type="button">
          <img alt="" class="rounded-full object-cover shadow-soft ring-1 ring-border transition-transform duration-200 group-hover:scale-105 h-12 w-12 sm:h-16 sm:w-16" height="256" loading="lazy" src="assets/eco-merchants.png" width="256"/>
          <span class="mt-2 font-display font-semibold text-brand-charcoal text-xs sm:text-sm">
           Merchants
@@ -157,7 +157,7 @@
           Offer Financing
          </span>
         </button>
-        <button aria-pressed="false" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-36 px-3 py-2.5 sm:w-44 sm:py-3 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:50%;top:87%" type="button">
+        <button aria-pressed="false" data-participant="partners" class="group absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl bg-card text-center ring-1 ring-border transition-all duration-200 w-36 px-3 py-2.5 sm:w-44 sm:py-3 cursor-pointer hover:-translate-y-[calc(50%+4px)] hover:shadow-soft hover:ring-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" style="left:50%;top:87%" type="button">
          <img alt="" class="rounded-full object-cover shadow-soft ring-1 ring-border transition-transform duration-200 group-hover:scale-105 h-10 w-10 sm:h-12 sm:w-12" height="256" loading="lazy" src="assets/eco-partners.png" width="256"/>
          <span class="mt-2 font-display font-semibold text-brand-charcoal text-[11px] sm:text-xs">
           Financial Partners
@@ -167,7 +167,7 @@
          </span>
         </button>
        </div>
-       <p aria-live="polite" class="mx-auto mt-6 min-h-12 max-w-md text-center text-muted-foreground">
+       <p id="participant-description" aria-live="polite" class="mx-auto mt-6 min-h-12 max-w-md text-center text-muted-foreground">
         Select a participant to see how Trewda connects them.
        </p>
       </div>
@@ -618,6 +618,42 @@
    </footer>
   </div>
   <script src="assets/site.js">
+  </script>
+  <script>
+    (function () {
+      var description = document.getElementById('participant-description');
+      var buttons = document.querySelectorAll('[data-participant]');
+
+      if (!description || !buttons.length) return;
+
+      var messages = {
+        consumers: 'Consumers explore financing options from participating financial partners when purchasing from a participating merchant.',
+        merchants: 'Merchants offer customers financing through technology built into the way they already sell.',
+        partners: 'Participating financial institutions provide the financing products, reaching customers through the Trewda platform.'
+      };
+
+      function setDescription(participant) {
+        var text = messages[participant] || description.textContent;
+        description.textContent = text;
+
+        buttons.forEach(function (button) {
+          var isSelected = button.getAttribute('data-participant') === participant;
+          button.setAttribute('aria-pressed', String(isSelected));
+        });
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener('mouseenter', function () {
+          setDescription(button.getAttribute('data-participant'));
+        });
+        button.addEventListener('focus', function () {
+          setDescription(button.getAttribute('data-participant'));
+        });
+        button.addEventListener('click', function () {
+          setDescription(button.getAttribute('data-participant'));
+        });
+      });
+    })();
   </script>
  </body>
 </html>
